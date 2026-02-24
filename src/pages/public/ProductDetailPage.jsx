@@ -21,7 +21,7 @@ const SUPPLEMENT_ICONS = {
   'Lumière jaune': '✨',
 }
 
-function DirectBuyForm({ product, quantity, supplements, suppPrices = {}, onClose }) {
+function DirectBuyForm({ product, quantity, supplements, suppPrices = {}, selectedColor, onClose }) {
   const { t } = useLang()
   const [form, setForm] = useState({ firstName: '', lastName: '', phone: '', wilaya: '', commune: '', instagram: '' })
   const isValidInstagram = (val) => /^[a-zA-Z0-9._]{1,30}$/.test(val.replace(/^@/, ''))
@@ -68,7 +68,10 @@ function DirectBuyForm({ product, quantity, supplements, suppPrices = {}, onClos
         items: [{
           product: product._id,
           name: product.name,
-          size: supplements.length > 0 ? `+ ${supplements.join(', ')}` : 'Unique',
+          size: [
+            selectedColor ? `Couleur: ${selectedColor}` : '',
+            supplements.length > 0 ? `+ ${supplements.join(', ')}` : '',
+          ].filter(Boolean).join(' | ') || 'Unique',
           quantity,
           price: product.price,
         }],
@@ -233,6 +236,7 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1)
   const [currentImage, setCurrentImage] = useState(0)
   const [selectedSupplements, setSelectedSupplements] = useState([])
+  const [selectedColor, setSelectedColor] = useState('')
   const [showBuyForm, setShowBuyForm] = useState(false)
   const [suppPrices, setSuppPrices] = useState({})
 
@@ -263,6 +267,7 @@ export default function ProductDetailPage() {
   const maxStock = product.stock ?? product.sizes?.[0]?.stock ?? 1
   const images = product.images?.length > 0 ? product.images : ['/placeholder.jpg']
   const supplements = product.supplements || []
+  const colors = product.colors || []
   const purchaseCount = product.purchaseCount ?? 0
 
   const toggleSupplement = (s) => {
@@ -275,7 +280,7 @@ export default function ProductDetailPage() {
     const sizeLabel = selectedSupplements.length > 0
       ? `+ ${selectedSupplements.join(', ')}`
       : 'Unique'
-    addToCart({ ...product, supplements: selectedSupplements }, sizeLabel, quantity, suppPrices)
+    addToCart({ ...product, supplements: selectedSupplements, selectedColor }, sizeLabel, quantity, suppPrices)
     toast.success(`${product.name} ajouté au panier ! 🌸`)
   }
 
@@ -367,6 +372,32 @@ export default function ProductDetailPage() {
 
           <div className="h-px bg-gray-100" />
 
+          {/* Couleurs disponibles */}
+          {colors.length > 0 && (
+            <div>
+              <p className="text-text-dark text-sm font-bold mb-3">
+                🎨 Couleur
+                {selectedColor && (
+                  <span className="ml-2 text-teal-main">— {selectedColor}</span>
+                )}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {colors.map((c) => (
+                  <button key={c} onClick={() => setSelectedColor(selectedColor === c ? '' : c)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold border-2 transition-all
+                      ${selectedColor === c
+                        ? 'bg-teal-main text-white border-teal-main shadow-sm scale-105'
+                        : 'bg-white text-gray-500 border-gray-200 hover:border-teal-main hover:text-teal-main'
+                      }`}>
+                    {c}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="h-px bg-gray-100" />
+
           {/* Suppléments */}
           {supplements.length > 0 && (
             <div>
@@ -447,6 +478,7 @@ export default function ProductDetailPage() {
           quantity={quantity}
           supplements={selectedSupplements}
           suppPrices={suppPrices}
+          selectedColor={selectedColor}
           onClose={() => setShowBuyForm(false)}
         />
       )}
