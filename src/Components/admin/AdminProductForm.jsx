@@ -9,9 +9,18 @@ const CATEGORIES = [
   'Bouquets Papillon',
   'Bouquets Anniversaire',
   'Bouquets Fiançailles',
+  'Bouquet Classique',
   'Décoration',
   'Mini Bouquet',
+  'Pipe Cleaner',
   'Soutenance',
+  'Promotion',
+]
+
+const DEFAULT_COLORS = [
+  'Rouge', 'Rose', 'Rose pâle', 'Blanc', 'Crème', 'Jaune', 'Orange',
+  'Violet', 'Mauve', 'Bleu', 'Vert', 'Pêche', 'Bordeaux', 'Corail',
+  'Multicolore', 'Pastel',
 ]
 
 const SUPPLEMENTS_FALLBACK = [
@@ -30,6 +39,7 @@ export default function AdminProductForm({ initialData, onSuccess, onCancel }) {
     price: '',
     stock: '',
     supplements: [],
+    colors: [],
     images: [],
   })
   const [uploading, setUploading] = useState(false)
@@ -54,6 +64,7 @@ export default function AdminProductForm({ initialData, onSuccess, onCancel }) {
         price: initialData.price ?? '',
         stock: initialData.stock ?? '',
         supplements: initialData.supplements ?? [],
+        colors: initialData.colors ?? [],
         images: initialData.images ?? [],
       })
     }
@@ -71,6 +82,25 @@ export default function AdminProductForm({ initialData, onSuccess, onCancel }) {
         ? prev.supplements.filter((s) => s !== sup)
         : [...prev.supplements, sup],
     }))
+  }
+
+  const toggleColor = (color) => {
+    setForm((prev) => ({
+      ...prev,
+      colors: prev.colors.includes(color)
+        ? prev.colors.filter((c) => c !== color)
+        : [...prev.colors, color],
+    }))
+  }
+
+  const [customColor, setCustomColor] = useState('')
+  const addCustomColor = () => {
+    const c = customColor.trim()
+    if (!c) return
+    if (!form.colors.includes(c)) {
+      setForm((prev) => ({ ...prev, colors: [...prev.colors, c] }))
+    }
+    setCustomColor('')
   }
 
   const handleImageUpload = async (e) => {
@@ -112,6 +142,7 @@ export default function AdminProductForm({ initialData, onSuccess, onCancel }) {
       price: Number(form.price),
       stock: Number(form.stock),
       supplements: form.supplements,
+      colors: form.colors,
       images: form.images,
     }
 
@@ -214,6 +245,45 @@ export default function AdminProductForm({ initialData, onSuccess, onCancel }) {
               )
             })}
           </div>
+        </div>
+
+        {/* ── COULEURS DISPONIBLES ── */}
+        <div>
+          <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">🎨 Couleurs disponibles</label>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {DEFAULT_COLORS.map((color) => {
+              const active = form.colors.includes(color)
+              return (
+                <button key={color} type="button" onClick={() => toggleColor(color)}
+                  className={"text-xs px-3 py-1.5 rounded-full font-semibold border-2 transition-all " + (active ? 'bg-teal-main text-white border-teal-main' : 'bg-white text-gray-400 border-gray-200 hover:border-teal-main hover:text-teal-main')}>
+                  {color}
+                </button>
+              )
+            })}
+          </div>
+          {/* Couleur personnalisée */}
+          <div className="flex gap-2">
+            <input
+              type="text" value={customColor} onChange={(e) => setCustomColor(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomColor())}
+              placeholder="Ajouter une couleur..."
+              className="flex-1 px-4 py-2 rounded-2xl border-2 border-teal-100 text-sm text-text-dark outline-none focus:border-teal-main transition-all"
+            />
+            <button type="button" onClick={addCustomColor}
+              className="px-4 py-2 bg-teal-main text-white text-sm font-bold rounded-2xl hover:bg-teal-main/90 transition-all">
+              +
+            </button>
+          </div>
+          {form.colors.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {form.colors.map((c) => (
+                <span key={c} className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-full font-semibold bg-teal-main text-white">
+                  {c}
+                  <button type="button" onClick={() => toggleColor(c)} className="hover:opacity-70 ml-0.5">×</button>
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="flex gap-3 pt-2">
