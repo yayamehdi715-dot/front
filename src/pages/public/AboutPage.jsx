@@ -5,7 +5,7 @@ const ABOUT_TRANSLATIONS = {
   fr: {
     title: 'Notre Histoire',
     subtitle: 'Made by Marie',
-    p1: 'est une boutique en ligne spécialisée dans la création de bouquets de fleurs',
+    p1: 'est une boutique en ligne Algérienne spécialisée dans la création de bouquets de fleurs',
     p1bold: 'faits main, de haute qualité',
     p1end: '— des compositions florales pensées pour durer toute une vie.',
     p2: "Depuis 2023, basés en Algérie, nous livrons dans toutes les wilayas. Chaque bouquet est assemblé à la main avec amour, emballé avec soin et livré directement chez vous en moins de 10 jours. Que ce soit pour un mariage, un anniversaire, ou simplement pour faire plaisir à quelqu'un que vous aimez — nous avons le bouquet parfait pour chaque occasion.",
@@ -23,7 +23,7 @@ const ABOUT_TRANSLATIONS = {
   en: {
     title: 'Our Story',
     subtitle: 'Made by Marie',
-    p1: 'is an online store specializing in handmade flower bouquets',
+    p1: 'is an Algerian online store specializing in handmade flower bouquets',
     p1bold: ' handmade, high quality',
     p1end: '— floral compositions designed to last a lifetime.',
     p2: 'Since 2023, based in Algeria, we deliver to all wilayas. Each bouquet is assembled by hand with love, carefully packaged and delivered directly to your door within 10 days. Whether for a wedding, a birthday, or simply to please someone you love — we have the perfect bouquet for every occasion.',
