@@ -18,6 +18,9 @@ export const translations = {
       decoration: 'Décoration',
       miniBouquet: 'Mini Bouquet',
       soutenance: 'Soutenance',
+      bouquetClassique: 'Bouquet Classique',
+      pipeCleaner: 'Pipe Cleaner',
+      promotion: 'Promotion',
       notreHistoire: 'Notre Histoire',
     },
     // Catégories
@@ -28,9 +31,12 @@ export const translations = {
       'Bouquets Papillon': 'Bouquets Papillon',
       'Bouquets Anniversaire': "Bouquets d'Anniversaire",
       'Bouquets Fiançailles': 'Bouquets de Fiançailles',
+      'Bouquet Classique': 'Bouquet Classique',
       'Décoration': 'Décoration',
       'Mini Bouquet': 'Mini Bouquet',
+      'Pipe Cleaner': 'Pipe Cleaner',
       'Soutenance': 'Soutenance',
+      'Promotion': 'Promotion',
     },
     // Page produits
     products: {
@@ -147,6 +153,9 @@ export const translations = {
       decoration: 'Decoration',
       miniBouquet: 'Mini Bouquet',
       soutenance: 'Graduation',
+      bouquetClassique: 'Classic Bouquet',
+      pipeCleaner: 'Pipe Cleaner',
+      promotion: 'Promotion',
       notreHistoire: 'Our Story',
     },
     categories: {
@@ -156,9 +165,12 @@ export const translations = {
       'Bouquets Papillon': 'Butterfly Bouquets',
       'Bouquets Anniversaire': 'Birthday Bouquets',
       'Bouquets Fiançailles': 'Engagement Bouquets',
+      'Bouquet Classique': 'Classic Bouquet',
       'Décoration': 'Decoration',
       'Mini Bouquet': 'Mini Bouquet',
+      'Pipe Cleaner': 'Pipe Cleaner',
       'Soutenance': 'Graduation',
+      'Promotion': 'Promotion',
     },
     products: {
       title: 'All our flowers',
@@ -270,6 +282,9 @@ export const translations = {
       decoration: 'الديكور',
       miniBouquet: 'باقة صغيرة',
       soutenance: 'تخرج',
+      bouquetClassique: 'باقة كلاسيكية',
+      pipeCleaner: 'Pipe Cleaner',
+      promotion: 'عروض',
       notreHistoire: 'قصتنا',
     },
     categories: {
@@ -279,9 +294,12 @@ export const translations = {
       'Bouquets Papillon': 'باقات الفراشة',
       'Bouquets Anniversaire': 'باقات عيد الميلاد',
       'Bouquets Fiançailles': 'باقات الخطوبة',
+      'Bouquet Classique': 'باقة كلاسيكية',
       'Décoration': 'الديكور',
       'Mini Bouquet': 'باقة صغيرة',
+      'Pipe Cleaner': 'Pipe Cleaner',
       'Soutenance': 'تخرج',
+      'Promotion': 'عروض',
     },
     products: {
       title: 'جميع زهورنا',
