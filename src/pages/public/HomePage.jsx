@@ -5,17 +5,20 @@ import ProductCard from '../../Components/public/ProductCard'
 import { useLang } from '../../context/LanguageContext'
 
 const IMG = {
-  hero:         '/images/hero.jpg',
-  geants:       '/images/Geant.jpg',
-  mariage:      '/images/mariage.jpg',
-  anniversaire: '/images/aniverssaire.jpg',
-  fiancailles:  '/images/fiancail.webp',
-  papillon:     '/images/papillion.jpg',
-  portesCles:   '/images/main.jpg',
-  decorations:  '/images/decojpg.jpg',
-  minibouquet:  '/images/minibouquet.jpg',
-  soutenance:   '/images/soutenance.jpg',    // 📌 Ajoute cette image dans /public/images/
-  histoire:     '/images/main.jpg',
+  hero:            '/images/hero.jpg',
+  geants:          '/images/Geant.jpg',
+  mariage:         '/images/mariage.jpg',
+  anniversaire:    '/images/aniverssaire.jpg',
+  fiancailles:     '/images/fiancail.webp',
+  papillon:        '/images/papillion.jpg',
+  portesCles:      '/images/main.jpg',
+  decorations:     '/images/decojpg.jpg',
+  minibouquet:     '/images/minibouquet.jpg',
+  soutenance:      '/images/soutenance.jpg',
+  bouquetClassique:'/images/bouquet-classique.jpg',
+  pipeCleaner:     '/images/pipe-cleaner.jpg',
+  promotion:       '/images/promotion.jpg',
+  histoire:        '/images/main.jpg',
 }
 
 export default function HomePage() {
@@ -24,16 +27,18 @@ export default function HomePage() {
   const navigate = useNavigate()
 
   const COLLECTIONS = [
-    { label: t.categories['Bouquets Géants'],        img: IMG.geants,       tag: 'Bouquets Géants' },
-    { label: t.categories['Bouquets de Mariage'],    img: IMG.mariage,      tag: 'Bouquets de Mariage' },
-    { label: t.categories['Bouquets Anniversaire'],  img: IMG.anniversaire, tag: 'Bouquets Anniversaire' },
-    { label: t.categories['Bouquets Fiançailles'],   img: IMG.fiancailles,  tag: 'Bouquets Fiançailles' },
-    { label: t.categories['Soutenance'],             img: IMG.soutenance,   tag: 'Soutenance' },
+    { label: t.categories['Bouquets Géants'],        img: IMG.geants,          tag: 'Bouquets Géants' },
+    { label: t.categories['Bouquets de Mariage'],    img: IMG.mariage,         tag: 'Bouquets de Mariage' },
+    { label: t.categories['Bouquets Anniversaire'],  img: IMG.anniversaire,    tag: 'Bouquets Anniversaire' },
+    { label: t.categories['Bouquets Fiançailles'],   img: IMG.fiancailles,     tag: 'Bouquets Fiançailles' },
+    { label: t.categories['Soutenance'],             img: IMG.soutenance,      tag: 'Soutenance' },
+    { label: t.categories['Bouquet Classique'],      img: IMG.bouquetClassique, tag: 'Bouquet Classique' },
   ]
 
   const ACCESSORIES = [
     { label: t.categories['Décoration'],   img: IMG.decorations, tag: 'Décoration' },
     { label: t.categories['Mini Bouquet'], img: IMG.minibouquet, tag: 'Mini Bouquet' },
+    { label: t.categories['Pipe Cleaner'], img: IMG.pipeCleaner, tag: 'Pipe Cleaner' },
   ]
 
   useEffect(() => {
@@ -133,6 +138,34 @@ export default function HomePage() {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* ── PROMOTIONS ── */}
+      <section className="px-4 py-4">
+        <div className="bg-gradient-to-r from-pink-100 to-teal-50 rounded-3xl overflow-hidden relative">
+          <div className="relative">
+            <img src={IMG.promotion} alt="Promotions" className="w-full h-48 object-cover opacity-80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-pink-main/60 to-transparent flex items-end p-5">
+              <div>
+                <span className="bg-white text-pink-main text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
+                  🎉 {t.categories['Promotion']}
+                </span>
+                <h2 className="text-white text-2xl font-extrabold mt-2 leading-tight drop-shadow-md">
+                  Offres spéciales 🌸
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div className="p-4">
+            <p className="text-text-dark/70 text-sm mb-4">
+              Découvrez nos bouquets en promotion — des créations magnifiques à prix réduit !
+            </p>
+            <button onClick={() => navigate('/products?category=Promotion')}
+              className="w-full bg-pink-main text-white font-bold rounded-full px-6 py-3 text-sm shadow-md hover:bg-pink-main/90 transition-all active:scale-95">
+              Voir les promotions →
+            </button>
+          </div>
         </div>
       </section>
 
