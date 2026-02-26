@@ -9,6 +9,14 @@ import wilayas from '../../data/wilayas'
 import { InstagramRedirectModal } from '../../Components/public/CheckoutForm'
 import { saveOrder, markDmSent } from '../../Components/public/OrderStatusBanner'
 
+// ✅ Images optimisées via URL Cloudinary
+function getOptimizedUrl(url, width = 800) {
+  if (!url || !url.includes('cloudinary.com')) return url
+  return url.replace('/upload/', `/upload/w_${width},q_auto:good,f_auto/`)
+}
+function getThumbnailUrl(url) { return getOptimizedUrl(url, 120) }
+
+
 const SUPPLEMENT_ICONS = {
   'Petite couronne': '👑',
   'Couronne royale': '🏆',
@@ -111,7 +119,7 @@ function DirectBuyForm({ product, quantity, supplements, suppPrices = {}, select
 
           <div className="px-6 py-5 space-y-4 overflow-y-auto flex-1" style={{paddingBottom: '2rem'}}>
             <div className="flex items-center gap-3 bg-pink-50 rounded-2xl p-3">
-              {product.images?.[0] && <img src={product.images[0]} alt="" className="w-12 h-12 rounded-xl object-cover" />}
+              {product.images?.[0] && <img src={getThumbnailUrl(product.images[0])} alt="" className="w-12 h-12 rounded-xl object-cover" />}
               <div className="flex-1 min-w-0">
                 <p className="font-bold text-text-dark text-sm truncate">{product.name}</p>
                 <p className="text-text-dark/50 text-xs">Qté : {quantity} • {(product.price * quantity).toLocaleString('fr-DZ')} DA</p>
@@ -297,7 +305,7 @@ export default function ProductDetailPage() {
 
         {/* Galerie */}
         <div className="relative aspect-square overflow-hidden rounded-3xl bg-white shadow-card mb-4 group">
-          <img src={images[currentImage]} alt={product.name}
+          <img src={getOptimizedUrl(images[currentImage])} alt={product.name}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
 
           {images.length > 1 && (
@@ -342,7 +350,7 @@ export default function ProductDetailPage() {
               <button key={i} onClick={() => setCurrentImage(i)}
                 className={`aspect-square w-14 rounded-xl overflow-hidden border-2 transition-all
                   ${i === currentImage ? 'border-pink-main' : 'border-transparent opacity-50'}`}>
-                <img src={img} alt="" className="w-full h-full object-cover" />
+                <img src={getThumbnailUrl(img)} alt="" className="w-full h-full object-cover" />
               </button>
             ))}
           </div>
