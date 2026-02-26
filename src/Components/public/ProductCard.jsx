@@ -1,11 +1,18 @@
 import { Link } from 'react-router-dom'
 import { useLang } from '../../context/LanguageContext'
 
+// ✅ Demande à Cloudinary une version redimensionnée via l'URL (pas de crédit supplémentaire)
+// Remplace /upload/ par /upload/w_400,q_auto:good,f_auto/ → image 4x plus légère pour les cards
+function getOptimizedUrl(url, width = 400) {
+  if (!url || !url.includes('cloudinary.com')) return url
+  return url.replace('/upload/', `/upload/w_${width},q_auto:good,f_auto/`)
+}
+
 export default function ProductCard({ product }) {
   const { t } = useLang()
   const stock = product.stock ?? product.sizes?.[0]?.stock ?? 0
   const hasStock = stock > 0
-  const imageUrl = product.images?.[0] || '/placeholder.jpg'
+  const imageUrl = getOptimizedUrl(product.images?.[0]) || '/placeholder.jpg'
   const hasSupplements = product.supplements?.length > 0
   const purchaseCount = product.purchaseCount ?? 0
 
