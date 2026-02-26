@@ -123,7 +123,16 @@ export default function AdminProductForm({ initialData, onSuccess, onCancel }) {
     }
   }
 
-  const removeImage = (index) => {
+  const removeImage = async (index) => {
+    const url = form.images[index]
+    // ✅ Supprimer l'image de Cloudinary si c'est une URL Cloudinary (pas un placeholder local)
+    if (url && url.includes('cloudinary.com')) {
+      try {
+        await api.delete('/upload', { data: { url } })
+      } catch {
+        // On continue même si la suppression Cloudinary échoue
+      }
+    }
     setForm((prev) => ({
       ...prev,
       images: prev.images.filter((_, i) => i !== index),
