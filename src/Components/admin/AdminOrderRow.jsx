@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Check, Loader2, Instagram, Phone, MapPin, Package, Calendar, X, ShoppingBag, Trash2, AlertTriangle } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Check, Loader2, Instagram, Phone, MapPin, X, ShoppingBag, Trash2, AlertTriangle } from 'lucide-react'
 import api from '../../utils/api'
 import toast from 'react-hot-toast'
 
@@ -230,33 +230,15 @@ function OrderDetailModal({ order, onClose, onUpdated, onDeleted }) {
 }
 
 function AdminOrderRow({ order, onUpdated, onDeleted }) {
-  const [status, setStatus]     = useState(order.status || 'en attente')
-  const [saving, setSaving]     = useState(false)
-  const [dirty, setDirty]       = useState(false)
+  const [status, setStatus]         = useState(order.status || 'en attente')
   const [showDetail, setShowDetail] = useState(false)
 
+  // Sync local status when parent updates the order prop
+  useEffect(() => {
+    setStatus(order.status || 'en attente')
+  }, [order.status])
+
   const statusInfo = STATUS_OPTIONS.find((s) => s.value === status) || STATUS_OPTIONS[0]
-
-  const handleStatusChange = (e) => {
-    e.stopPropagation()
-    setStatus(e.target.value)
-    setDirty(e.target.value !== order.status)
-  }
-
-  const handleSave = async (e) => {
-    e.stopPropagation()
-    setSaving(true)
-    try {
-      await api.put(`/orders/${order._id}`, { status })
-      toast.success('Statut mis à jour')
-      setDirty(false)
-      onUpdated?.({ ...order, status })
-    } catch {
-      toast.error('Erreur mise à jour')
-      setStatus(order.status)
-      setDirty(false)
-    } finally { setSaving(false) }
-  }
 
   const handleUpdatedFromModal = (updated) => {
     setStatus(updated.status)
@@ -303,24 +285,11 @@ function AdminOrderRow({ order, onUpdated, onDeleted }) {
         <td className="px-4 py-3 hidden sm:table-cell text-brand-gray-500 text-xs whitespace-nowrap">
           {createdAt}
         </td>
-        <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
-          <div className="flex items-center gap-2">
-            <select value={status} onChange={handleStatusChange}
-              className="bg-brand-gray-900 border border-brand-gray-600 text-brand-white
-                         text-xs font-heading font-semibold tracking-wider uppercase
-                         pl-2 pr-6 py-1.5 outline-none focus:border-brand-red appearance-none cursor-pointer">
-              {STATUS_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-            {dirty && (
-              <button onClick={handleSave} disabled={saving}
-                className="w-7 h-7 bg-brand-red flex items-center justify-center
-                           hover:bg-white hover:text-brand-black transition-colors disabled:opacity-50">
-                {saving ? <Loader2 size={12} className="animate-spin" /> : <Check size={12} />}
-              </button>
-            )}
-          </div>
+        <td className="px-4 py-3">
+          {/* Badge statut coloré — lecture seule, cliquer sur la ligne ouvre le détail */}
+          <span className={`text-xs font-bold px-3 py-1 rounded-full border ${statusInfo.bg}`}>
+            {statusInfo.label}
+          </span>
         </td>
       </tr>
 
