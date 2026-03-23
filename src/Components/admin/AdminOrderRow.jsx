@@ -4,12 +4,12 @@ import api from '../../utils/api'
 import toast from 'react-hot-toast'
 
 const STATUS_OPTIONS = [
-  { value: 'en attente',   label: 'En attente',   bg: 'bg-gray-500/20 text-gray-300 border-gray-500/40' },
-  { value: 'confirmé',     label: 'Confirmé',     bg: 'bg-blue-500/20 text-blue-300 border-blue-500/40' },
-  { value: 'en livraison', label: 'En livraison', bg: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40' },
-  { value: 'livré',        label: 'Livré',        bg: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' },
-  { value: 'retour',       label: 'Retour',       bg: 'bg-orange-500/20 text-orange-300 border-orange-500/40' },
-  { value: 'annulé',       label: 'Annulé',       bg: 'bg-red-500/20 text-red-300 border-red-500/40' },
+  { value: 'en attente',   label: 'En attente',   dot: 'bg-gray-400',    bg: 'bg-gray-700 text-gray-100 border-gray-500' },
+  { value: 'confirmé',     label: 'Confirmé',     dot: 'bg-blue-400',    bg: 'bg-blue-900 text-blue-100 border-blue-500' },
+  { value: 'en livraison', label: 'En livraison', dot: 'bg-yellow-400',  bg: 'bg-yellow-900 text-yellow-100 border-yellow-500' },
+  { value: 'livré',        label: 'Livré',        dot: 'bg-emerald-400', bg: 'bg-emerald-900 text-emerald-100 border-emerald-500' },
+  { value: 'retour',       label: 'Retour',       dot: 'bg-orange-400',  bg: 'bg-orange-900 text-orange-100 border-orange-500' },
+  { value: 'annulé',       label: 'Annulé',       dot: 'bg-red-400',     bg: 'bg-red-900 text-red-100 border-red-500' },
 ]
 
 function OrderDetailModal({ order, onClose, onUpdated, onDeleted }) {
@@ -73,7 +73,8 @@ function OrderDetailModal({ order, onClose, onUpdated, onDeleted }) {
             <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12, marginTop: 2 }}>{createdAt}</p>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0 ml-3">
-            <span className={`text-xs font-bold px-3 py-1 rounded-full border ${statusInfo.bg}`}>
+            <span className={`flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full border ${statusInfo.bg}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${statusInfo.dot} flex-shrink-0`} />
               {statusInfo.label}
             </span>
             <button onClick={onClose}
@@ -287,7 +288,8 @@ function AdminOrderRow({ order, onUpdated, onDeleted }) {
         </td>
         <td className="px-4 py-3">
           {/* Badge statut coloré — lecture seule, cliquer sur la ligne ouvre le détail */}
-          <span className={`text-xs font-bold px-3 py-1 rounded-full border ${statusInfo.bg}`}>
+          <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full border ${statusInfo.bg}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${statusInfo.dot} flex-shrink-0`} />
             {statusInfo.label}
           </span>
         </td>
